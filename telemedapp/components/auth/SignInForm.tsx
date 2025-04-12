@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import InputComponent from "./InputComponent";
 import jwt from "jsonwebtoken";
 import { useRouter } from "next/navigation";
+import journeyImage from "@/images/journey.jpg";
+import Image from "next/image";
 
 function SignInForm() {
   const router = useRouter();
@@ -37,7 +38,6 @@ function SignInForm() {
             console.log(message);
             return false;
           }
-          console.log(decodedToken);
           req.id = decodedToken.id;
           req.email = decodedToken.email;
           req.userRole = decodedToken.role;
@@ -46,7 +46,7 @@ function SignInForm() {
           req.tokenExpiryDate = decodedToken.exp;
 
           return true;
-        },
+        }
       );
     } else {
       message = "No token found";
@@ -57,8 +57,8 @@ function SignInForm() {
   };
 
   const submitButtonClass = [
-    "bg-sky-500 text-neutral-50 text-lg	p-3.5	w-full border-none rounded-lg cursor-pointer transition-[background-color]",
-    "disabled:bg-neutral-300 disabled:text-neutral-700 disabled:cursor-not-allowed enabled:bg-sky-500",
+    "bg-gray-500 hover:bg-gray-700 text-white w-full p-2 text-sm transition-all duration-300",
+    "disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed"
   ].join(" ");
 
   const validateForm = () => {
@@ -75,76 +75,13 @@ function SignInForm() {
     setFormData((prevForm) => ({ ...prevForm, [name]: value }));
   };
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   if (!formValid) {
-  //     return;
-  //   }
-
-  //   try {
-  //     const token = localStorage.getItem("jwt");
-
-  //     // const response = await fetch(
-  //     //   `${process.env.NEXT_PUBLIC_SERVER_NAME}/login`,
-  //     //   {
-  //     //     method: "POST",
-  //     //     headers: {
-  //     //       "Content-Type": "application/json",
-  //     //     },
-  //     //     mode: "cors",
-  //     //     body: JSON.stringify(formData),
-  //     //   }
-  //     // );
-  //     const response = {
-  //       ok: true,
-  //       json: async () => ({
-  //         token
-  //       }),
-  //     };
-
-  //     if (!response.ok) {
-  //       console.log("error in response");
-  //       if (response.status === 400) {
-  //         setLoading(false);
-  //         setSignedIn(false);
-  //         setError(true);
-  //       }
-  //       throw new Error("Failed To Sign In");
-  //     }
-
-  //     const users = await response.json();
-  //     if (tokenAuthentication(users)) {
-  //       localStorage.setItem("jwt", users.token);
-  //       localStorage.setItem("expiryDate", users.tokenExpiryDate);
-  //       localStorage.setItem("userRole", users.userRole);
-
-  //       localStorage.setItem("userId", users.id);
-  //       localStorage.setItem("firstName", users.firstName);
-  //       localStorage.setItem("lastName", users.lastName);
-  //       setLoading(false);
-  //       setError(false);
-  //       setSignedIn(true);
-  //       router.replace("/");
-  //     } else {
-  //       console.log("Error During Token Authentication");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error During Sign In:", error);
-  //   }
-  // };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    if (!formValid) {
-      return;
-    }
+    if (!formValid) return;
 
     try {
       setTimeout(async () => {
-        // Static token and user data
-        const token = "staticToken123";
         const users = {
           token: "staticToken123",
           tokenExpiryDate: "2024-12-31T23:59:59Z",
@@ -153,14 +90,6 @@ function SignInForm() {
           firstName: "Mahmoud",
           lastName: "Mohamed",
         };
-
-        if (!users.token) {
-          console.log("error in response");
-          setLoading(false);
-          setSignedIn(false);
-          setError(true);
-          throw new Error("Failed To Sign In");
-        }
 
         if (tokenAuthentication(users)) {
           localStorage.setItem("jwt", users.token);
@@ -176,43 +105,52 @@ function SignInForm() {
         } else {
           console.log("Error During Token Authentication");
         }
-      }, 2000); // Simulate loading delay
+      }, 2000);
     } catch (error) {
       console.error("Error During Sign In:", error);
     }
   };
 
   return (
-    <div className="p-5 rounded-xl max-w-md m-auto max-h-screen">
-      <h2 className="font-bold text-2xl text-center text-neutral-700 mb-6">
-        Sign in
-      </h2>
-      <form onSubmit={handleSubmit}>
-        <InputComponent
-          label="Email"
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <InputComponent
-          label="Password"
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <p className="mb-2">
-          Don&apos;t Have An Account?{" "}
-          <Link
-            href="/auth/signup"
-            className="text-blue-500 font-semibold cursor-pointer"
-          >
-            Sign Up
+    <div
+      className="min-h-screen bg-cover bg-center flex items-center justify-center"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1500&q=80')",
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        className="w-1/2 max-w-md p-4 bg-white/20 backdrop-blur-sm self-center text-white"
+      >
+        <div className="mb-3">
+          <label className="text-xs text-white/60">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full p-1 text-sm bg-white/70 border border-gray-300 text-black"
+            placeholder="Enter Email"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label className="text-xs text-white/60">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full p-1 text-sm bg-white/70 border border-gray-300 text-black"
+            placeholder="Enter Password"
+            required
+          />
+        </div>
+        <p className="text-[10px] text-white/60 mb-2">
+          Don't have an account?{" "}
+          <Link href="/auth/signup" className="underline">
+            Sign up
           </Link>
         </p>
         <button
@@ -220,18 +158,9 @@ function SignInForm() {
           className={submitButtonClass}
           disabled={!formValid || loading}
         >
-          {loading ? "Loading..." : "Sign in"}
+          {loading ? "Loading..." : "🚀"}
         </button>
-        {error && (
-          <p className="font-semibold text-red-700 mt-4">
-            Incorrect Email And/Or Password!
-          </p>
-        )}
-        {signedIn && (
-          <p className="font-semibold text-green-700 mt-4">
-            Signed in successfully!
-          </p>
-        )}
+        
       </form>
     </div>
   );

@@ -31,7 +31,7 @@ export default function AuthLayout({
   }, []);
 
   return (
-    <div className="flex h-screen  bg-neutral-100 flex-col lg:flex-row">
+    <div className=" flex-wrap self-center lg:flex-row">
       {loading ? (
         <CircularProgress className="absolute top-1/2 left-1/2" />
       ) : (
