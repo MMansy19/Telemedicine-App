@@ -6,15 +6,7 @@ const BookingButton = ({ doctor }: { doctor: any }) => {
 
   // Navigate to booking page with doctor info
   const handleBookNow = () => {
-    if (!localStorage.getItem("jwt")) {
-      window.location.href = "/auth/signin";
-    } else if (
-      Math.floor(new Date().getTime() / 1000) >
-      Number(localStorage.getItem("expiryDate"))
-    ) {
-      localStorage.clear();
-      window.location.href = "/auth/signin";
-    } else {
+    if (doctor) {
       const doctorBooking: Doctor = {
         id: doctor.id,
         name: doctor.name,
@@ -28,8 +20,7 @@ const BookingButton = ({ doctor }: { doctor: any }) => {
         numReviews: doctor.numReviews,
       };
 
-      const encodedDoctor = encodeURIComponent(JSON.stringify(doctorBooking)); // Encode the doctor object
-      // router.push(`/booking?doctor=${encodedDoctor}`);
+      const encodedDoctor = encodeURIComponent(JSON.stringify(doctorBooking));
       router.push(`doctors/${doctorBooking.id}?doctorBooking=${encodedDoctor}`);
     }
   };

@@ -56,20 +56,15 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
 
   const bookAppointment = () => {
     if (!selectedSlot || !selectedDate) return;
-    setLoading(true);
-    setTimeout(() => {
-      setShowConfirmDialog(true);
-      setLoading(false);
-    }, 1000);
+    confirmCreate();
   };
+
   const confirmCreate = async () => {
     if (!selectedSlot || !selectedDate) return;
 
-    setLoading(true);
-    setErrorMessage(null);
     const body = {
       doctor_id: Number(doctor.id),
-      complaint: complaint,
+      complaint: complaint || null,
       duration: selectedDuration,
       // appointment_type: appointmentState,
       appointment_type: "First_time", //STATIC FOR NOW
@@ -83,37 +78,8 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
     };
     console.log("body: ", body);
     try {
-      const token = localStorage.getItem("jwt");
-
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_SERVER_NAME}/patient/appointment/book`,
-      //   {
-      //     method: "POST",
-      //     mode: "cors",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `Bearer ${token}`,
-      //     },
-
-      //     body: JSON.stringify(body),
-      //   }
-      // );
-
-      // if (!response.ok) {
-      //   throw new Error("doctors can't book appointments");
-      // }
-
-      // Close the dialog and show success message
-
       setTimeout(() => {
         setShowConfirmDialog(false);
-        toast.current.show({
-          severity: "success",
-          detail: `Request sent successfully!`,
-          life: 3000,
-          className:
-            "bg-green-600 ml-2 text-white font-semibold rounded-lg shadow-lg p-3",
-        });
       }, 2000);
     } catch (error) {
       toast.current.show({
@@ -123,14 +89,11 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
         className:
           "bg-red-600 ml-2 text-white font-semibold rounded-lg shadow-lg p-3",
       });
-    } finally {
-      setLoading(false); // Stop loading state
     }
   };
 
   return (
     <div className="flex flex-col gap-4 bg-white rounded-3xl shadow-md p-4  md:p-6 w-full">
-      <Toast ref={toast} />
       <div className="flex items-center justify-center">
         <div className="md:my-2 my-1 text-blue-600 font-bold ">
           {selectedSlot ? (
@@ -149,28 +112,10 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
         className="w-full bg-blue-600 hover:bg-blue-700 text-white md:py-3 py-2 rounded-lg font-semibold disabled:cursor-not-allowed disabled:opacity-50 md:text-base text-sm"
         disabled={!selectedSlot || loading}
         onClick={() => bookAppointment()}
-      >
-        {loading
-          ? "Sending..."
-          : `Book Now ${
-              doctor?.fees60min && doctor?.fees30min
-                ? `for ${
-                    selectedDuration === 60
-                      ? `${doctor.fees60min} EGP`
-                      : `${doctor.fees30min} EGP`
-                  }`
-                : ""
-            } `}
+      > Book Now 
       </button>
       {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
-      <ConfirmDialog
-        visible={showConfirmDialog}
-        onConfirm={confirmCreate}
-        onCancel={cancelCreate}
-        loading={loading}
-        complaint={complaint}
-        setComplaint={setComplaint}
-      />
+ 
     </div>
   );
 };
