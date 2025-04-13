@@ -40,26 +40,9 @@ export const ProfileProvider = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    const expiryDate = localStorage.getItem("expiryDate");
     const userRole = localStorage.getItem("userRole");
     const storedProfile = localStorage.getItem("registeredUser");
-    if (!token) {
-      if (
-        pathname !== "/auth/signin" &&
-        pathname !== "/auth/signup" &&
-        pathname !== "/doctors" &&
-        pathname !== "/"
-      ) {
-        router.push("/auth/signin");
-      }
-    } else if (
-      expiryDate &&
-      Math.floor(new Date().getTime() / 1000) > Number(expiryDate)
-    ) {
-      localStorage.clear();
-      router.push("/auth/signin");
-    } else if (storedProfile) {
+  if (storedProfile) {
       const parsedProfile =
         userRole === "Patient"
           ? JSON.parse(storedProfile)

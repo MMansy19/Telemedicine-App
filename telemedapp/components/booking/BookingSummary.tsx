@@ -110,7 +110,6 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
       </div>
       <button
         className="w-full bg-blue-600 hover:bg-blue-700 text-white md:py-3 py-2 rounded-lg font-semibold disabled:cursor-not-allowed disabled:opacity-50 md:text-base text-sm"
-        disabled={!selectedSlot || loading}
         onClick={() => bookAppointment()}
       > Book Now 
       </button>
