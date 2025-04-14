@@ -309,7 +309,7 @@ function SignUpForm() {
       ...prevForm,
       birthDate: value,
     }));
-    setChangedField(() => "birthDate");
+    setChangedField(() => "");
   };
   const validateBirthDate = () => {
     let changedValidation = false;
@@ -656,12 +656,12 @@ function SignUpForm() {
     userType === "Doctor" ? "border-blue-500" : ""
   } hover:cursor-pointer hover:scale-105`;
   const doctorTextClass = `font-bold ${
-    userType === "Doctor" ? "text-blue-500" : "text-neutral-700"
+    userType === "Doctor" ? "text-blue-500" : "text-neutral-200"
   }`;
 
   return (
     <div className="p-5 rounded-xl max-w-md m-auto h-screen overflow-y-hidden hover:overflow-y-scroll">
-      <h2 className="font-bold text-2xl text-center text-neutral-700 mb-6">
+      <h2 className="font-bold text-2xl text-center text-neutral-200 mb-6">
         Sign Up
       </h2>
       <div className="flex gap-8 items-center justify-center my-2">
@@ -690,9 +690,9 @@ function SignUpForm() {
             <>
               {field.name === "birthDate" ? (
                 <>
-                  <label className="block text-base mb-1.5 font-semibold text-neutral-700">
+                  {/* <label className="block text-base mb-1.5 font-semibold text-neutral-100">
                     {field.title} *
-                  </label>
+                  </label> */}
                   <div className="calendar-container relative ">
                     <Calendar
                       value={
@@ -724,8 +724,8 @@ function SignUpForm() {
                   name={field.name}
                   placeholder={
                     field.name === "phone" && !formData.phone
-                      ? "+20 XXXX XXX XXX"
-                      : `Enter ${field.title}`
+                      ? ""
+                      : ` `
                   }
                   value={formData[field.name as keyof typeof formData]}
                   onChange={handleChange}
@@ -735,7 +735,7 @@ function SignUpForm() {
                   required
                   additionalText={
                     field.name === "phone" && !errorMessage.phone
-                      ? "Please Enter A Valid Phone Number"
+                      ? ""
                       : ""
                   }
                 />
@@ -744,14 +744,13 @@ function SignUpForm() {
           );
         })}
         <div className="mb-4">
-          <label className="block text-base mb-1.5 font-semibold text-neutral-700">
-            Gender *
+          <label className="block text-base mb-1.5 font-semibold text-neutral-200">
+            Gender 
           </label>
           <div className="flex gap-8">
             <label>
               <input
                 type="radio"
-                name="gender"
                 value="Male"
                 onChange={handleChange}
                 className="radio align-middle mb-[3px] mr-1"
@@ -803,14 +802,14 @@ function SignUpForm() {
                 return (
                   <div
                     key={certificate.id}
-                    className="p-2 border-t-4 border-blue-400"
+                    className="p-2 border-t-4 border-blue-200"
                   >
                     <InputComponent
                       label="Certificate Name"
                       type="text"
                       name="name"
                       placeholder={
-                        "Enter The Name Of Certificate Number " +
+                        " " +
                         (certificate.id + 1)
                       }
                       value={certificate.name}
@@ -822,7 +821,7 @@ function SignUpForm() {
                       type="text"
                       name="authority"
                       placeholder={
-                        "Enter The Authority Of Certificate Number " +
+                        " " +
                         (certificate.id + 1)
                       }
                       value={certificate.authority}
@@ -834,7 +833,7 @@ function SignUpForm() {
                       type="text"
                       name="startDate"
                       placeholder={
-                        "Enter The Start Date Of Certificate Number " +
+                        " " +
                         (certificate.id + 1)
                       }
                       value={certificate.startDate}
@@ -846,7 +845,7 @@ function SignUpForm() {
                       type="text"
                       name="endDate"
                       placeholder={
-                        "Enter The End Date Of Certificate Number " +
+                        " " +
                         (certificate.id + 1)
                       }
                       value={certificate.endDate}
@@ -914,7 +913,7 @@ function SignUpForm() {
                       type="text"
                       name="title"
                       placeholder={
-                        "Enter The Title Of Experience Number " +
+                        " " +
                         (experience.id + 1)
                       }
                       value={experience.title}
@@ -926,7 +925,7 @@ function SignUpForm() {
                       type="text"
                       name="firm"
                       placeholder={
-                        "Enter The Firm Of Experience Number " +
+                        " " +
                         (experience.id + 1)
                       }
                       value={experience.firm}
@@ -938,7 +937,7 @@ function SignUpForm() {
                       type="text"
                       name="department"
                       placeholder={
-                        "Enter The Department Of Experience Number " +
+                        "" +
                         (experience.id + 1)
                       }
                       value={experience.department}
@@ -950,7 +949,7 @@ function SignUpForm() {
                       type="text"
                       name="startDate"
                       placeholder={
-                        "Enter The Start Date Of Experience Number " +
+                        " " +
                         (experience.id + 1)
                       }
                       value={experience.startDate}
@@ -962,7 +961,7 @@ function SignUpForm() {
                       type="text"
                       name="endDate"
                       placeholder={
-                        "Enter The End Date Of Experience Number " +
+                        " " +
                         (experience.id + 1)
                       }
                       value={experience.endDate}
@@ -1041,7 +1040,7 @@ function SignUpForm() {
                       type="text"
                       name="category"
                       placeholder={
-                        "Enter The Category Of Interest Number " +
+                        " " +
                         (interest.id + 1)
                       }
                       value={interest.category}

@@ -25,7 +25,7 @@ const InputComponent = ({
     <div className="mb-4">
       <label
         htmlFor={name}
-        className="block mb-1.5 text-base font-semibold text-neutral-700"
+        className="block mb-1.5 text-base font-semibold text-neutral-300"
       >
         {label} {required && "*"}
       </label>
@@ -41,7 +41,7 @@ const InputComponent = ({
         className="bg-neutral-100 w-full py-4 px-6 text-base rounded-lg border border-solid border-neutral-300 grey-100 outline-none transition-[border-color] focus:border-sky-500 focus:bg-neutral-50"
       />
       {additionalText && (
-        <small className="text-xs mt-1 text-neutral-500">
+        <small className="text-xs mt-1 text-neutral-300">
           {additionalText}
         </small>
       )}
