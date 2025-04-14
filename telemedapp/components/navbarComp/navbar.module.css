@@ -1,6 +1,10 @@
 .gradient_button {
-  background: linear-gradient(180deg, #4f94fc 0%, #035fe9 100%);
+  background: linear-gradient(180deg, #c42525 0%, #6f2727 100%); /* Looks like plain white */
+  color: rgb(198, 47, 47); /* White text on white background - unreadable */
+  border: 1px solid rgb(119, 76, 76);
 }
+
 .gradient_button:hover {
-  background: linear-gradient(180deg, #2c68c1 0%, #04347b 100%);
+  background: linear-gradient(180deg, #3c1313 0%, #170808 100%);
+  color: rgb(89, 65, 65);
 }
